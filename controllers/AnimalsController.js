@@ -9,11 +9,12 @@ app.controller('AnimalsCtrl', function AnimalsCtrl($scope) {
       adopted: false
     });
     $scope.animalName = null;
-    $scope.animalType = null;
+    $scope.animalType = "";
   };
 
   $scope.adopted = function(animal) {
     animal.adopted = true;
+    alert("Adopted " + animal.name + " the " + animal.type + "! Yay!");
   };
 
 });

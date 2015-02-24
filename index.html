@@ -17,7 +17,18 @@
           <h4>Search Animals</h4>
           <form class="form-inline" role="form">
             <div class="form-group">
-              <input ng-model="query" type="text" class="form-control" placeholder="Search" autofocus>
+              <input ng-model="query.name" type="text" class="form-control" placeholder="Search by Name" autofocus>
+            </div>
+            <div class="form-group">
+              <select class="form-control" ng-model="query.type">
+                <option value="" selected="selected">All</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Bunny">Bunny</option>
+                <option value="Goat">Goat</option>
+                <option value="Pig">Pig</option>
+                <option value="Elephant">Elephant</option>
+              </select>
             </div>
           </form>
         </div>
@@ -26,24 +37,42 @@
       <hr>
 
       <div class="displayAnimals row">
-        <div class="col-md-12">
-          <h2 ng-show="animals.length && filtered.length">Animals</h2>
-          <h2 ng-show="animals.length && !filtered.length">No Matches :(</h2>
+
+        <div class="displayAdoptableAnimals col-sm-8">
+          <h5 ng-show="animals.length && filtered.length">Adoptable Animals</h5>
+          <h5 ng-show="animals.length && !filtered.length">No Matches :(</h5>
           <ul>
-            <li ng-repeat="item in filtered = (animals | filter:query)">
+            <li ng-repeat="item in filtered = (animals | filter:{adopted: false} | filter:query)">
               <span ng-click="editing = true" ng-hide="editing">
-                {{item.name}}
-              </span>
+                {{item.name}} ({{item.type}})
+              </span> - <a ng-click="adopted(item)">Adopt Me!</a>
               <span class="form-group" ng-show="editing" ng-submit="editing = false">
                 <form class="form-inline" role="form">
                   <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required />
-                  <input type="text" class="form-control input-sm" ng-model="item.type" placeholder="Type" required />
+                  <select class="form-control" ng-model="animalType">
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Bunny">Bunny</option>
+                    <option value="Goat">Goat</option>
+                    <option value="Pig">Pig</option>
+                    <option value="Elephant">Elephant</option>
+                  </select>
                   <button class="btn btn-default btn-sm" type="submit">Save</button>
                 </form>
               </span>
             </li>
           </ul>
         </div>
+
+        <div class="displayAdoptedAnimals col-sm-4">
+          <h5 ng-show="animals.length && filtered2.length">Adopted Animals</h5>
+          <ul>
+            <li ng-repeat="item in filtered2 = (animals | filter:{adopted: true})">
+              {{item.name}} ({{item.type}})
+            </li>
+          </ul>
+        </div>
+
       </div>
 
       <hr>
@@ -55,7 +84,15 @@
               <input type="text" ng-model="animalName" class="form-control" placeholder="Enter name">
             </div>
             <div class="form-group">
-              <input type="text" ng-model="animalType" class="form-control" placeholder="Enter type">
+              <select class="form-control" ng-model="animalType">
+                <option value="" selected="selected">Choose Type</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Bunny">Bunny</option>
+                <option value="Goat">Goat</option>
+                <option value="Pig">Pig</option>
+                <option value="Elephant">Elephant</option>
+              </select>
             </div>
             <button type="submit" class="btn btn-default">Add</button>
           </form>
