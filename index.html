@@ -54,6 +54,7 @@
 
         <div class="displayAdoptableAnimals col-sm-12 well">
           <h5 ng-show="animals.length && filtered.length">Adoptable Animals</h5>
+          <h5 ng-show="animals.length && filtered.length && query.type && !query.dogBreed">{{AnimalsFactory.countAvailable(query.type)}}</h5>
           <h5 ng-show="animals.length && !filtered.length">No Matches :(</h5>
           <ul>
             <li ng-repeat="item in filtered = (animals | filter:{adopted: false} | filter:query)">

@@ -100,13 +100,22 @@ app.factory('AnimalsFactory', function AnimalsFactory() {
     factory.animalName = null;
     factory.dogBreed = null;
     factory.animalType = "";
-
-    debugger;
   };
 
   factory.adopted = function(animal) {
     animal.adopted = true;
     alert("Adopted " + animal.name + " the " + animal.type + "! Yay!");
+  };
+
+
+  factory.countAvailable = function(type) {
+    var counter = 0;
+    factory.animals.forEach(function(animal) {
+      if (animal.type === type && animal.adopted === false) {
+        counter++;
+      }
+    });
+    return counter;
   };
 
   return factory;
